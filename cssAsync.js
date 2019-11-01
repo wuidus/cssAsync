@@ -19,13 +19,25 @@ function cssAsync( arrCssUri ) {
     addHeadStyleTag( item_id );
     if(isDebug) console.log(document.getElementById(item_id));
 
-    $.when( $.ajax( item ) ).then(function( data, textStatus, jqXHR ) {
-      if ( jqXHR.status === 200 ) {
-        populateStyleTag(item_id, data);
+   // $.when( $.ajax( item ) ).then(function( data, textStatus, jqXHR ) {
+    fetch( item )
+    .then(function(response) {
+      if ( response.ok === true ) {
+        return response.text();
       } else {
+        throw item + ' not found!';
       }
+    })
+    .then( function( text ) {
+      populateStyleTag(item_id, text);  
+    })
+    .catch(function(error) {
+      console.error(error);
+    })
+    .finally(function(){
       cssList.removeItem(item);
-    });
+    })
+    
   });
 
   function addHeadStyleTag ( id ) {
