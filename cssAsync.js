@@ -81,7 +81,7 @@ function cssAsync( arrCssUri ) {
           if(isDebug) console.log( 'css loaded' );
           if(isDebug) console.log( document.querySelector('html').getAttribute('class') );
         }
-      } ,60);
+      } ,20);
     });
     return cssList;
   }
